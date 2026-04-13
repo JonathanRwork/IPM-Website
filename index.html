@@ -203,20 +203,6 @@
             margin: 0 auto;
             padding: 6rem 2rem;
             background: var(--color-light-bg);
-            border-top: 2px solid var(--color-border);
-            position: relative;
-        }
-
-        .features::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            width: 400px;
-            height: 40px;
-            transform: translateX(-50%);
-            background: linear-gradient(to bottom, var(--color-white), transparent);
-            pointer-events: none;
         }
 
         .section-title {
@@ -279,19 +265,21 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 6rem 2rem;
-            border-top: 2px solid var(--color-border);
             position: relative;
         }
 
         .pricing::before {
             content: '';
             position: absolute;
-            top: -20px;
-            left: 50%;
-            width: 400px;
-            height: 40px;
-            transform: translateX(-50%);
-            background: linear-gradient(to bottom, var(--color-light-bg), transparent);
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, 
+                var(--color-light-bg) 0%, 
+                rgba(245, 249, 241, 0.8) 30%,
+                rgba(255, 255, 255, 0.6) 60%,
+                var(--color-white) 100%);
             pointer-events: none;
         }
 
@@ -395,19 +383,21 @@
             margin: 0 auto;
             padding: 6rem 2rem;
             background: var(--color-light-bg);
-            border-top: 2px solid var(--color-border);
             position: relative;
         }
 
         .screenshots::before {
             content: '';
             position: absolute;
-            top: -20px;
-            left: 50%;
-            width: 400px;
-            height: 40px;
-            transform: translateX(-50%);
-            background: linear-gradient(to bottom, var(--color-white), transparent);
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, 
+                var(--color-white) 0%, 
+                rgba(255, 255, 255, 0.8) 30%,
+                rgba(245, 249, 241, 0.6) 60%,
+                var(--color-light-bg) 100%);
             pointer-events: none;
         }
 
