@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPM Manager – Professionelles Fallenkontroll-Tracking</title>
+    <meta name="description" content="IPM Manager: Vereinfachtes und zuverlässiges Tracking von Monitoringfallen für professionelle Schädlingsbekämpfer und Kammerjäger.">
+    <meta name="keywords" content="IPM, Fallenkontrolle, Schädlingsbekämpfung, Monitoring, App, iOS">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #2d5016;
+            --color-secondary: #7cb342;
+            --color-accent: #558b2f;
+            --color-light: #f1f8e9;
+            --color-dark: #1b1b1b;
+            --color-text: #333;
+            --color-text-light: #666;
+            --color-bg: #ffffff;
+            --color-border: #e0e0e0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #0f0f0f;
+                --color-text: #f5f5f5;
+                --color-text-light: #b0b0b0;
+                --color-border: #333;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.6;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 100;
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--color-secondary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--color-secondary);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+            header {
+                padding: 1rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--color-text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+            margin-bottom: 2rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--color-secondary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .cta-button:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            background: var(--color-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .features {
+                background: #1a1a1a;
+            }
+        }
+
+        .features h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .features-intro {
+            text-align: center;
+            color: var(--color-text-light);
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--color-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--color-secondary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--color-primary);
+        }
+
+        .feature-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .pricing {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .pricing h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .pricing-intro {
+            text-align: center;
+            color: var(--color-text-light);
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--color-light);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .pricing-card {
+                background: #1a1a1a;
+            }
+        }
+
+        .pricing-card.featured {
+            border-color: var(--color-secondary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-4px);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.4rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            margin: 1rem 0;
+        }
+
+        .pricing-card .price-note {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+            min-height: 200px;
+        }
+
+        .pricing-card li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .pricing-card li:before {
+            content: "✓ ";
+            color: var(--color-secondary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .pricing-card .cta-button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .screenshots {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            background: var(--color-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .screenshots {
+                background: #1a1a1a;
+            }
+        }
+
+        .screenshots h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .screenshots-intro {
+            text-align: center;
+            color: var(--color-text-light);
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .screenshot-item {
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 9 / 16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.03);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .footer {
+            background: var(--color-primary);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.7rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        section[id^="privacy"],
+        section[id^="terms"],
+        section[id^="impressum"] {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        section[id^="privacy"].active,
+        section[id^="terms"].active,
+        section[id^="impressum"].active {
+            display: block;
+        }
+
+        .doc-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .doc-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .doc-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--color-primary);
+        }
+
+        .doc-section p {
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .doc-section ol, .doc-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .doc-section li {
+            margin-bottom: 0.8rem;
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+
+        .doc-section a {
+            color: var(--color-secondary);
+            text-decoration: none;
+        }
+
+        .doc-section a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .back-to-top a {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .back-to-top a:hover {
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .features,
+            .pricing,
+            .screenshots {
+                padding: 3rem 1.5rem;
+            }
+            .features h2,
+            .pricing h2,
+            .screenshots h2 {
+                font-size: 1.8rem;
+            }
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            .pricing-card.featured:hover {
+                transform: translateY(-4px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">IPM</div>
+                <span>Manager</span>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#privacy" onclick="showSection('privacy'); return false;">Datenschutz</a></li>
+                <li><a href="#terms" onclick="showSection('terms'); return false;">AGB</a></li>
+                <li><a href="#impressum" onclick="showSection('impressum'); return false;">Impressum</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="active">
+        <!-- Hero -->
+        <div class="hero">
+            <p class="hero-subtitle">Schädlingsbekämpfung professionell managen</p>
+            <h1>IPM Manager</h1>
+            <p>Vereinfachtes und zuverlässiges Tracking von Monitoringfallen – für Kammerjäger und professionelle Schädlingsbekämpfer.</p>
+            <button class="cta-button" disabled style="cursor: not-allowed; opacity: 0.6;">
+                Im App Store verfügbar (demnächst)
+            </button>
+        </div>
+
+        <!-- Features -->
+        <section class="features">
+            <h2>Warum IPM Manager?</h2>
+            <p class="features-intro">Alles, was du für professionelle Fallenkontrolle brauchst – strukturiert, schnell und zuverlässig.</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Einfaches Tracking</h3>
+                    <p>Verwalte deine Monitoringfallen übersichtlich: Kunden, Räume, Fallen – alle an einem Ort strukturiert und sofort zugänglich.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Fotodokumentation</h3>
+                    <p>Speichere Fotos von Fallen und Fängen direkt in der App – für später Auswertung, Kundenkommunikation und Dokumentation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud-Sync</h3>
+                    <p>Deine Daten synchronisieren automatisch – arbeite nahtlos auf mehreren Geräten, überall und jederzeit.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Datensicherheit</h3>
+                    <p>Sichere Authentifizierung und verschlüsselte Datenspeicherung nach deutschen Datenschutzstandards – DSGVO-konform.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Echtzeit-Analytics</h3>
+                    <p>Überwache Schädlingspopulationen in Echtzeit – Temperatur, Luftfeuchte, Art und Anzahl der Fänge auf einen Blick.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Schneller Zugriff</h3>
+                    <p>Finde Kunden, Räume und Fallen mit einem Tap – intuitive Navigation, optimiert für die Arbeit vor Ort.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="pricing">
+            <h2>Flexible Pläne für jedes Unternehmen</h2>
+            <p class="pricing-intro">Wähle den Plan, der zu deinem Geschäftsumfang passt – oder starte kostenlos.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">€0</div>
+                    <p class="price-note">Monatlich</p>
+                    <ul>
+                        <li>1 Kunde</li>
+                        <li>5 Räume</li>
+                        <li>20 Fallen pro Raum</li>
+                        <li>Basis-Features</li>
+                        <li>Cloud-Sync</li>
+                        <li>Perfekt zum Testen</li>
+                    </ul>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Plus</h3>
+                    <div class="price">€10</div>
+                    <p class="price-note">Monatlich</p>
+                    <ul>
+                        <li>3 Kunden</li>
+                        <li>15 Räume pro Kunde</li>
+                        <li>50 Fallen pro Raum</li>
+                        <li>Fotoupload</li>
+                        <li>Analytics & Filter</li>
+                        <li>Für Kleinunternehmen ideal</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3>Pro</h3>
+                    <div class="price">€25</div>
+                    <p class="price-note">Monatlich</p>
+                    <ul>
+                        <li>Unbegrenzte Kunden</li>
+                        <li>Unbegrenzte Räume</li>
+                        <li>Unbegrenzte Fallen</li>
+                        <li>Vollständige Analytics</li>
+                        <li>API-Zugang (kommt bald)</li>
+                        <li>Premium Support</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots -->
+        <section class="screenshots">
+            <h2>So funktioniert's</h2>
+            <p class="screenshots-intro">Ein Blick in die App – vom Login über Kundenmanagement bis zur Fallenkontrolle mit Echtzeit-Daten.</p>
+            <div class="screenshot-gallery">
+                <div class="screenshot-item">
+                    <img src="screenshot-1.png" alt="Login Screen – Email, Google und Apple Sign In">
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-2.png" alt="Kundenliste – Alle deine Kunden im Überblick">
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-3.png" alt="Fallenkontrolle – Fallen pro Raum verwalten">
+                </div>
+                <div class="screenshot-item">
+                    <img src="screenshot-4.png" alt="Kontrolle mit Details – Schädlinge, Temperatur, Luftfeuchte">
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Privacy Policy -->
+    <section id="privacy">
+        <div class="doc-section">
+            <h2>Datenschutzerklärung</h2>
+            <p><strong>Gültig ab:</strong> 13. April 2026</p>
+
+            <h3>1. Verantwortlicher</h3>
+            <p>
+                Verantwortlicher für die Datenverarbeitung gemäß DSGVO ist:<br><br>
+                <strong>Jonathan Rottenkolber</strong><br>
+                Frühlingstraße 12<br>
+                86415 Mering, Bayern, Deutschland<br><br>
+                <strong>E-Mail:</strong> jonathanr.778work@gmail.com<br>
+                <strong>Telefon:</strong> +49 170 1124073
+            </p>
+
+            <h3>2. Datenverarbeitung in der App</h3>
+            <p>Die IPM Manager App verarbeitet die folgenden Kategorien personenbezogener Daten:</p>
+            <ul>
+                <li><strong>Benutzerkonto:</strong> E-Mail-Adresse, Passwort (verschlüsselt via Firebase Authentication), Google/Apple ID (bei OAuth-Login)</li>
+                <li><strong>Arbeitsdaten:</strong> Kundennamen, Adressen, Raumbezeichnungen, Fallen-IDs, Insektenarten, Fangzahlen, Fotos von Fallen und Fängen</li>
+                <li><strong>Umgebungsdaten:</strong> Temperatur, Luftfeuchte (sofern über Sensoren erfasst)</li>
+                <li><strong>Technische Daten:</strong> Geräte-ID, App-Nutzungsstatistiken, Firebase Analytics Pseudonym-ID, Fehlerberichte</li>
+            </ul>
+
+            <h3>3. Rechtsgrundlage</h3>
+            <p>Die Verarbeitung erfolgt auf folgenden Grundlagen:</p>
+            <ul>
+                <li><strong>Art. 6 Abs. 1 lit. b DSGVO:</strong> Vertragsdurchführung (Nutzerkonten, Fallenkontroll-Features)</li>
+                <li><strong>Art. 6 Abs. 1 lit. f DSGVO:</strong> Berechtigte Interessen (Systemsicherheit, Missbrauchsprävention, App-Verbesserung)</li>
+                <li><strong>Art. 6 Abs. 1 lit. a DSGVO:</strong> Einwilligung (Firebase Analytics – kann in den App-Einstellungen deaktiviert werden)</li>
+            </ul>
+
+            <h3>4. Speicherdienste und Cloud-Anbieter</h3>
+            <p>Die App nutzt folgende Dienste zur Datenspeicherung und -verarbeitung:</p>
+
+            <strong>Google Firebase (Firestore, Authentication, Storage):</strong>
+            <ul>
+                <li>Gehostet in der EU (Region: eu-west1 – Irland)</li>
+                <li>Google verarbeitet Daten als Auftragsverarbeiter (Data Processing Amendment)</li>
+                <li>Weitere Informationen: <a href="https://firebase.google.com/terms/data-processing-terms" target="_blank">Firebase Data Processing Terms</a></li>
+            </ul>
+
+            <strong>Google Firebase Authentication:</strong>
+            <ul>
+                <li>E-Mail/Passwort mit Argon2-Hashing</li>
+                <li>Google OAuth 2.0 (bei Google Sign In)</li>
+                <li>Apple Sign In (OpenID Connect)</li>
+                <li>Alle Authentifizierungs-Tokens sind verschlüsselt und werden nur für diese Sitzung verwendet</li>
+            </ul>
+
+            <strong>Google Firebase Analytics:</strong>
+            <ul>
+                <li>Pseudonyme Nutzungsdaten (keine direkten Identifizierer)</li>
+                <li>Wird verwendet zur Verbesserung der App-Qualität, Fehleranalyse und Feature-Priorisierung</li>
+                <li>Kann in den App-Einstellungen deaktiviert werden (Opt-out)</li>
+            </ul>
+
+            <h3>5. Datensicherheit</h3>
+            <p>Folgende Sicherheitsmaßnahmen sind implementiert:</p>
+            <ul>
+                <li><strong>Verschlüsselung in Transit:</strong> TLS 1.2+ für alle Datenübertragungen</li>
+                <li><strong>Verschlüsselung im Speicher:</strong> Passwörter mit Argon2, Fotos mit AES-256 in Firebase Storage</li>
+                <li><strong>Zugriffskontrolle:</strong> Firebase Security Rules beschränken Zugriff auf eigene Daten</li>
+                <li><strong>Regelmäßige Audits:</strong> Firebase unterliegt regelmäßigen SOC 2 Type II Audits</li>
+            </ul>
+
+            <h3>6. Datenaufbewahrung</h3>
+            <p>Daten werden wie folgt behandelt:</p>
+            <ul>
+                <li><strong>Aktive Konten:</strong> Daten werden so lange gespeichert, wie das Konto aktiv ist</li>
+                <li><strong>Gelöschte Konten:</strong> Alle Daten werden innerhalb von 30 Tagen nach Kontolöschung gelöscht (ausgenommen gesetzlich vorgeschriebene Aufbewahrungsfristen wie Steuerdaten)</li>
+                <li><strong>Fotos:</strong> Können jederzeit vom Benutzer gelöscht werden; werden mit dem Konto gelöscht</li>
+                <li><strong>Analytics-Daten:</strong> Werden nach 14 Monaten automatisch gelöscht</li>
+            </ul>
+
+            <h3>7. Benutzerrechte (DSGVO)</h3>
+            <p>Du hast das Recht auf:</p>
+            <ul>
+                <li><strong>Auskunft (Art. 15):</strong> Erhalte eine Kopie all deiner gespeicherten Daten</li>
+                <li><strong>Berichtigung (Art. 16):</strong> Korrigiere unrichtige oder unvollständige Daten</li>
+                <li><strong>Löschung (Art. 17):</strong> Lasse dein Konto und alle Daten löschen</li>
+                <li><strong>Einschränkung (Art. 18):</strong> Beschränke die Verarbeitung deiner Daten</li>
+                <li><strong>Datenportabilität (Art. 20):</strong> Erhalte deine Daten in strukturiertem, maschinenlesbarem Format</li>
+                <li><strong>Widerspruchsrecht (Art. 21):</strong> Widerspreche der Verarbeitung zu bestimmten Zwecken</li>
+            </ul>
+            <p><strong>Anfragen bitte an:</strong> jonathanr.778work@gmail.com</p>
+
+            <h3>8. Drittlandtransfers</h3>
+            <p>Daten werden primär in der EU (eu-west1, Irland) gehostet. Google hat sich der EU-US Data Privacy Framework angeschlossen.</p>
+
+            <h3>9. Änderungen dieser Datenschutzerklärung</h3>
+            <p>Diese Datenschutzerklärung kann jederzeit angepasst werden. Wesentliche Änderungen werden dir per E-Mail mitgeteilt, falls ein Konto registriert ist.</p>
+
+            <div class="back-to-top">
+                <a href="#home" onclick="showSection('home'); return false;">← Zurück zur Startseite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms of Service -->
+    <section id="terms">
+        <div class="doc-section">
+            <h2>Allgemeine Geschäftsbedingungen (AGB)</h2>
+            <p><strong>Gültig ab:</strong> 13. April 2026</p>
+
+            <h3>1. Geltungsbereich</h3>
+            <p>Diese AGB regeln die Nutzung der IPM Manager App (iOS) und das Verhältnis zwischen dem Anbieter (Jonathan Rottenkolber, nachfolgend „Anbieter") und dem Benutzer (nachfolgend „Nutzer").</p>
+
+            <h3>2. Vertragsschluss</h3>
+            <p>Der Download und die Nutzung der App gelten als Annahme dieser AGB. Ein Vertrag kommt zustande mit:</p>
+            <ul>
+                <li>Download der App aus dem Apple App Store</li>
+                <li>Registrierung eines Benutzerkontos (Email/Google/Apple Sign In)</li>
+                <li>Erste Nutzung der App nach Registrierung</li>
+            </ul>
+
+            <h3>3. Nutzungsrechte und Einschränkungen</h3>
+            <p>Die App wird als persönliche, nicht-exklusive Lizenz zur Nutzung bereitgestellt. Der Nutzer darf:</p>
+            <ul>
+                <li>Die App für geschäftliche Zwecke im Bereich Schädlingsbekämpfung und professionelle Fallenkontrolle nutzen</li>
+                <li>Die App auf bis zu 5 Apple-Geräten installieren (gleichzeitiger Zugriff nur auf einem Gerät)</li>
+            </ul>
+            <p>Der Nutzer darf nicht:</p>
+            <ul>
+                <li>Die App weitergeben, vermieten, verkaufen oder verleihen</li>
+                <li>Die App rückwärts-konstruieren, dekompilieren oder verändern</li>
+                <li>Die App hackern, cracken oder umgehen von Sicherheitsmaßnahmen</li>
+                <li>Daten aus der App zu kommerziellen Zwecken außer für die eigene Schädlingsbekämpfungs-Tätigkeit nutzen</li>
+            </ul>
+
+            <h3>4. Registrierung und Konto</h3>
+            <p>Der Nutzer ist verantwortlich für:</p>
+            <ul>
+                <li>Richtigkeit und Aktualität aller Registrierungsdaten</li>
+                <li>Geheimhaltung von Passwort und Zugangsdaten</li>
+                <li>Alle Aktivitäten, die unter seinem Konto stattfinden</li>
+                <li>Benachrichtigung des Anbieters bei unbefugtem Zugriff</li>
+            </ul>
+
+            <h3>5. Abo-Modelle und Zahlungsbedingungen</h3>
+            <p>Die App bietet folgende Abo-Modelle:</p>
+            <ul>
+                <li><strong>Free:</strong> 1 Kunde, 5 Räume, 20 Fallen pro Raum – kostenlos</li>
+                <li><strong>Plus:</strong> 3 Kunden, 15 Räume pro Kunde, 50 Fallen pro Raum – €10/Monat</li>
+                <li><strong>Pro:</strong> Unbegrenzte Kunden, Räume, Fallen – €25/Monat</li>
+            </ul>
+
+            <strong>Zahlungsabwicklung:</strong>
+            <ul>
+                <li>Alle zahlungspflichtigen Abos werden über den Apple App Store abgewickelt</li>
+                <li>Der Nutzer autorisiert Apple, die Zahlung am angegebenen Gerät durchzuführen</li>
+                <li>Abos verlängern sich automatisch, es sei denn, die Auto-Erneuerung wird mindestens 24 Stunden vor Verlängerungsdatum deaktiviert</li>
+                <li>Rechnungen werden vom Apple App Store bereitgestellt</li>
+            </ul>
+
+            <h3>6. Widerrufsrecht</h3>
+            <p>Für Käufe über den Apple App Store gelten die Widerrufsbedingungen von Apple. Widerrufe müssen innerhalb von 14 Tagen nach Kaufabschluss geltend gemacht werden – siehe Apple-Richtlinien für Rückerstattungen.</p>
+
+            <h3>7. Verfügbarkeit und Wartung</h3>
+            <p>Der Anbieter bemüht sich, die App zuverlässig bereitzustellen. Es ist ausdrücklich nicht garantiert:</p>
+            <ul>
+                <li>Ständige 24/7-Verfügbarkeit</li>
+                <li>Unterbrechungsfreier Betrieb</li>
+                <li>Wartungsarbeiten können zu Ausfallzeiten führen (der Anbieter gibt Bescheid, wenn möglich)</li>
+            </ul>
+
+            <h3>8. Haftung</h3>
+            <p>Die App wird „wie besehen" (as-is) bereitgestellt. Der Anbieter haftet nicht für:</p>
+            <ul>
+                <li>Direkte oder indirekte Schäden aus der Nutzung der App</li>
+                <li>Verlust oder Beschädigung von Daten</li>
+                <li>Datenverlust durch technische Fehler, Netzwerkprobleme oder Benutzerversagen</li>
+                <li>Ausfallzeiten oder Serviceunterbrechungen</li>
+                <li>Entgangene Gewinne oder wirtschaftliche Schäden</li>
+            </ul>
+            <p><strong>Ausnahme:</strong> Der Anbieter haftet unbegrenzt für Schäden aus grober Fahrlässigkeit, Vorsatz oder bei Verletzung essentieller Vertragspflichten.</p>
+
+            <h3>9. Benutzerdaten und Verantwortung</h3>
+            <p>Der Nutzer ist verantwortlich für:</p>
+            <ul>
+                <li>Richtigkeit und Legitimität aller Daten, die er in die App eingibt (Kundendaten, Adressen, etc.)</li>
+                <li>Einhaltung aller Gesetze bei der Speicherung von Kundendaten (DSGVO, Datenschutz)</li>
+                <li>Haftung für unrechtmäßig gespeicherte oder missbrauchte Daten</li>
+                <li>Weitergabe von Datenschutzinformationen an seine eigenen Kunden (sofern erforderlich)</li>
+            </ul>
+
+            <h3>10. Sicherheit und Datenschutz</h3>
+            <p>Der Anbieter implementiert angemessene Sicherheitsmaßnahmen (siehe Datenschutzerklärung). Der Nutzer:</p>
+            <ul>
+                <li>Muss sein Passwort schützen und es nicht mit anderen teilen</li>
+                <li>Ist selbst verantwortlich für den Schutz seines Geräts (Antivirus, Firewall, etc.)</li>
+                <li>Sollte regelmäßig Backups durchführen</li>
+            </ul>
+
+            <h3>11. Änderungen und Kündigung</h3>
+            <p>Der Anbieter behält sich das Recht vor:</p>
+            <ul>
+                <li>Diese AGB jederzeit zu ändern (Ankündigung per In-App-Nachricht oder Email)</li>
+                <li>Die App oder Features einzustellen (30 Tage Ankündigung)</li>
+                <li>Das Konto zu sperren bei Missbrauch oder Verstoß gegen diese AGB</li>
+            </ul>
+            <p>Der Nutzer kann sein Konto jederzeit löschen (unter Account-Einstellungen). Alle Daten werden dann gelöscht.</p>
+
+            <h3>12. Support und Feedback</h3>
+            <p>Support und Fehlermeldungen: jonathanr.778work@gmail.com</p>
+            <p>Der Nutzer kann Feedback und Feature-Requests geben, aber es gibt keine Garantie, dass diese umgesetzt werden.</p>
+
+            <h3>13. Anwendbares Recht und Gerichtsstand</h3>
+            <p>Diese AGB unterliegen deutschem Recht (BGB, UWG). Gerichtsstand ist Mering, Bayern, Deutschland – sofern zulässig.</p>
+
+            <h3>14. Salvatorische Klausel</h3>
+            <p>Sollte eine Klausel dieser AGB unwirksam sein, bleibt der Rest gültig und wird angemessen angepasst.</p>
+
+            <div class="back-to-top">
+                <a href="#home" onclick="showSection('home'); return false;">← Zurück zur Startseite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impressum -->
+    <section id="impressum">
+        <div class="doc-section">
+            <h2>Impressum</h2>
+            <p><strong>Gültig ab:</strong> 13. April 2026</p>
+
+            <h3>Angaben gemäß TMG (Telemediengesetz) und MDStV (Mediendienste-Staatsvertrag)</h3>
+
+            <p>
+                <strong>Verantwortlich für Inhalte und Betrieb:</strong><br><br>
+                <strong>Name:</strong> Jonathan Rottenkolber<br>
+                <strong>Anschrift:</strong> Frühlingstraße 12<br>
+                <strong>PLZ/Stadt:</strong> 86415 Mering, Bayern<br>
+                <strong>Land:</strong> Deutschland<br><br>
+                <strong>Telefon:</strong> +49 170 1124073<br>
+                <strong>E-Mail:</strong> jonathanr.778work@gmail.com<br>
+            </p>
+
+            <h3>Geschäfsform und Registrierung</h3>
+            <p>
+                <strong>Geschäftsform:</strong> Kleingewerbe<br>
+                <strong>Geschäftstätigkeit:</strong> Entwicklung von iOS-Anwendungen und mobiler Software
+            </p>
+
+            <h3>Verantwortlichkeit für Inhalte</h3>
+            <p>
+                Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich. Meine Website wird regelmäßig überprüft und aktualisiert.
+            </p>
+
+            <h3>Urheberrecht und geistiges Eigentum</h3>
+            <p>
+                Die Inhalte und Werke dieser Website, einschließlich Design, Text, Grafiken und Code, sind urheberrechtlich geschützt (© Jonathan Rottenkolber). 
+            </p>
+            <p>
+                Jede Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedarf schriftlicher Zustimmung des Autors. 
+            </p>
+            <p>
+                Das Logo und die App-Branding von IPM Manager sind Markenzeichen von Jonathan Rottenkolber und unterliegen Schutz.
+            </p>
+
+            <h3>Externe Links</h3>
+            <p>
+                Diese Website enthält Links zu externen Websites. Der Betreiber hat keinen Einfluss auf die Inhalte verlinkter externer Websites. Für illegale, fehlerhafte oder unvollständige Inhalte und insbesondere für Schäden, die aus der Nutzung oder Nichtnutzung solcher Informationen entstehen, haftet allein der Anbieter der Website, auf die verwiesen wurde.
+            </p>
+
+            <h3>Datenschutz</h3>
+            <p>
+                Die Nutzung der Website und App ist grundsätzlich ohne Angabe personenbezogener Daten möglich. Soweit auf dieser Website personenbezogene Daten erhoben werden, erfolgt dies auf Grundlage von Einwilligung. Dies ist vollständig in der <a href="#privacy" onclick="showSection('privacy'); return false;">Datenschutzerklärung</a> beschrieben.
+            </p>
+
+            <h3>Haftungsausschluss</h3>
+            <p>
+                Der Autor übernimmt keine Gewähr für die Korrektheit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen auf dieser Website. Eine Haftung für Schäden ist ausgeschlossen, die direkt oder indirekt aus der Nutzung dieser Website entstehen.
+            </p>
+
+            <h3>Kontakt und Änderungen</h3>
+            <p>
+                Änderungen dieses Impressums sind jederzeit möglich. Die aktuelle Version ist immer auf dieser Website abrufbar.
+            </p>
+            <p>
+                <strong>Letzte Aktualisierung:</strong> 13. April 2026
+            </p>
+
+            <div class="back-to-top">
+                <a href="#home" onclick="showSection('home'); return false;">← Zurück zur Startseite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>App</h3>
+                <a href="#" onclick="alert('App kommt demnächst auf dem App Store'); return false;">Im App Store laden (kommt bald)</a>
+                <a href="https://github.com/rotteckLabs/ipm-app" target="_blank">GitHub Repository</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#privacy" onclick="showSection('privacy'); return false;">Datenschutzerklärung</a>
+                <a href="#terms" onclick="showSection('terms'); return false;">AGB</a>
+                <a href="#impressum" onclick="showSection('impressum'); return false;">Impressum</a>
+            </div>
+            <div class="footer-section">
+                <h3>Kontakt</h3>
+                <a href="mailto:jonathanr.778work@gmail.com">E-Mail</a>
+                <a href="tel:+491701124073">Telefon</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Jonathan Rottenkolber. Alle Rechte vorbehalten. IPM Manager™</p>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Handle back button for legal sections
+        window.addEventListener('popstate', function() {
+            if (window.location.hash === '' || window.location.hash === '#home') {
+                showSection('home');
+            }
+        });
+    </script>
+</body>
+</html>
